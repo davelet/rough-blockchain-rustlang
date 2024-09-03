@@ -3,16 +3,18 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use sha2::Digest;
 use sha2::Sha256;
 
+#[derive(Debug)]
 pub struct Block {
-    block_header: BlockHeader,
+    pub block_header: BlockHeader,
     block_body: BlockBody,
 }
 
 type BlockBody = Vec<String>;
 
-struct BlockHeader {
+#[derive(Debug)]
+pub struct BlockHeader {
     // the hash is part of this struct, simply serialising this struct won't work. exclude this from others when doing calculations
-    hash: String,
+    pub hash: String,
     // the serial number of this block. a new block is added to the blockchain with an increasing height
     height: u64,
     // the most interesting, it stores the hash eld value of the previous block
@@ -22,7 +24,7 @@ struct BlockHeader {
 }
 
 impl Block {
-    fn new(height: u64, prev_hash: String, body: BlockBody) -> Self {
+    pub fn new(height: u64, prev_hash: String, body: BlockBody) -> Self {
         let block_header = BlockHeader::new(height, prev_hash);
         let mut block = Self {
             block_header,
