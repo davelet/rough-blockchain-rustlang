@@ -1,9 +1,11 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use serde::Deserialize;
+use serde::Serialize;
 use sha2::Digest;
 use sha2::Sha256;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Block {
     pub block_header: BlockHeader,
     block_body: BlockBody,
@@ -11,16 +13,16 @@ pub struct Block {
 
 type BlockBody = Vec<String>;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct BlockHeader {
     // the hash is part of this struct, simply serialising this struct won't work. exclude this from others when doing calculations
     pub hash: String,
     // the serial number of this block. a new block is added to the blockchain with an increasing height
-    height: u64,
+    pub height: u64,
     // the most interesting, it stores the hash eld value of the previous block
-    prev_hash: String,
+    pub prev_hash: String,
     // when this block was created, related to the local machine
-    timestamp: u64,
+    pub timestamp: u64,
 }
 
 impl Block {
